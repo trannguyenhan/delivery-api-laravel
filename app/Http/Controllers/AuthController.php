@@ -28,6 +28,7 @@ class AuthController extends Controller
 
         // if success return information user and token
         return response()->json([
+            'code' => Code::OK,
             'message' => 'Login successfully!',
             'access_token' => $token,
             'user' => auth()->user()
@@ -52,6 +53,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json([
+            'code' => Code::OK,
             'message' => 'create account successfully',
             'user' => $user
         ]);
@@ -61,7 +63,18 @@ class AuthController extends Controller
      * Profile
      */
     public function profile(){
-        return response()->json(auth()->user());
+        if(!auth()->check()){
+            return response()->json([
+                'code' => Code::ERROR,
+                'message' => 'error, you not login'
+            ]);
+        }
+
+        return response()->json([
+            'code' => Code::OK,
+            'message' => 'get information successfully!',
+            'user' => auth()->user()
+        ]);
     }
 
     /**
@@ -71,7 +84,8 @@ class AuthController extends Controller
         auth()->logout(); // delete token
 
         return response()->json([
-            'message' => 'logout successfully',
+            'code' => Code::OK,
+            'message' => 'logout successfully!',
         ]);
     }
 }

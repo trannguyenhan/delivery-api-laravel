@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Constants\Code;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -9,18 +10,16 @@ use Illuminate\Http\Request;
 class VerifyAdmin
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * Handle an incoming request
      */
     public function handle(Request $request, Closure $next)
     {
         $user_id = auth()->id();
 
         if($user_id == null){
-            return response()->json(['message' => 'you no login'], 412);
+            return response()->json([
+                'code' => Code::ERROR,
+                'message' => 'you no login']);
         }
 
         $roles = User::find($user_id)->roles;
@@ -35,7 +34,9 @@ class VerifyAdmin
         if($cnt == 1){
             return $next($request);
         } else {
-            return response()->json(['message' => 'only admin access to resource'], 412);
+            return response()->json([
+                'code' => Code::ERROR,
+                'message' => 'only admin access to resource']);
         }
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderEloquentRepository extends EloquentRepository
 {
+    protected $_relationships = ['foods'];
+
     public function getModel()
     {
         return \App\Models\Order::class;
@@ -21,6 +23,8 @@ class OrderEloquentRepository extends EloquentRepository
         $status = $request->input('status');
 
         $order = Order::where('name', $order_name)->update(['status' => $status]);
-        return response()->json(['message' => 'update successfully']);
+        return response()->json([
+            'code' => Code::OK,
+            'message' => 'update successfully']);
     }
 }

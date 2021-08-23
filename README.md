@@ -5,7 +5,7 @@ API for Delivery App
 php artisan migrate
 ```
 
-### Create 3 new table: roles, role_user, foods, orders
+### Create 5 new table: roles, role_user, foods, orders
 ```
 create table roles(
 	id bigint unsigned not null auto_increment primary key,
@@ -28,15 +28,21 @@ create table foods(
 
 create table orders(
 	id bigint unsigned not null auto_increment primary key,
+    name varchar(50),
     user_id bigint unsigned,
-    food_id bigint unsigned,
     address varchar(5),
-    time datetime
+    time datetime,
+    status int, 
+    foreign key (user_id) references users(id)
 );
-alter table orders
-add column status int;
-alter table orders
-add column code varchar(15);
+
+create table food_order(
+	id bigint unsigned not null auto_increment primary key,
+    order_id bigint unsigned,
+    food_id bigint unsigned,
+    foreign key (order_id) references orders(id),
+    foreign key (food_id) references foods(id)
+);
 ```
 ### Run app
 ```

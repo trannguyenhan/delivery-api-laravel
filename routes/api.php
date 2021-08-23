@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // route login, register, logout
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::middleware('api')->get('/profile', [\App\Http\Controllers\AuthController::class, 'profile']);
 
 // only admin can see data of this API

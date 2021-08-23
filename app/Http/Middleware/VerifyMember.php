@@ -2,17 +2,14 @@
 
 namespace App\Http\Middleware;
 
+use App\Constants\Code;
 use Closure;
 use Illuminate\Http\Request;
 
 class VerifyMember
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * Handle an incoming request
      */
     public function handle(Request $request, Closure $next)
     {
@@ -22,7 +19,9 @@ class VerifyMember
         if($user == $user_id){
             return $next($request);
         } else {
-            return response()->json(['message' => 'you can not access to resource']);
+            return response()->json([
+                'code' => Code::ERROR,
+                'message' => 'you can not access to resource']);
         }
 
     }

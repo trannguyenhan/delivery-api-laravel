@@ -4,6 +4,7 @@ namespace App\Repositories;
 abstract class EloquentRepository{
     // \App\Models\Name:class
     protected $_model;
+    protected $_relationships = [];
 
     public function __construct()
     {
@@ -39,7 +40,7 @@ abstract class EloquentRepository{
 
         // sort by each property assigned
         $listSort = explode('|', $sortBy);
-        $modelsBuilder = $this->_model;
+        $modelsBuilder = $this->connectRelationship();
 
         foreach ($listSort as $sort){
             $modelsBuilder = $modelsBuilder->orderBy($sort, $desc);
@@ -47,10 +48,19 @@ abstract class EloquentRepository{
 
         // get records final and pagination
         $modelsBuilder = $modelsBuilder
-            ->where('name', 'like', '%' . $name . '%')
+            ->where('name', 'like', "%$name%")
             ->skip($page * $pageSize)
             ->take($pageSize);
 
         return $modelsBuilder->get();
+    }
+
+    public function connectRelationship(){
+        $modelsBuilder = $this->_model;
+        foreach ($this->_relationships as $relationship){
+            $modelsBuilder = $modelsBuilder->with($relationship);
+        }
+
+        return  $modelsBuilder;
     }
 }
