@@ -13,7 +13,7 @@ class VerifyMember
      */
     public function handle(Request $request, Closure $next)
     {
-        $user_id = auth()->user()->id;
+        $user_id = auth()->id();
         $user = $request->route('user');
 
         if($user == $user_id){

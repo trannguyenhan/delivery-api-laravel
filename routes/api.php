@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // route login, register, logout
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+Route::middleware('api')->post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::middleware('api')->get('/profile', [\App\Http\Controllers\AuthController::class, 'profile']);
 
 // only admin can see data of this API
@@ -35,4 +35,5 @@ Route::middleware(['api', 'admin_verify'])->group(function(){
 // only member can see data of this API
 Route::middleware(['api', 'member_verify'])->group(function(){
     Route::get('/{user}/food/list', [\App\Http\Controllers\UserController::class, 'foods']);
+    Route::post('{user}/food/create', [\App\Http\Controllers\FoodController::class, 'create']);
 });

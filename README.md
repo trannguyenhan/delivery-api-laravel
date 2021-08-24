@@ -5,7 +5,7 @@ API for Delivery App
 php artisan migrate
 ```
 
-### Create 5 new table: roles, role_user, foods, orders
+### Create 5 new table: roles, role_user, foods, orders, food_order
 ```
 create table roles(
 	id bigint unsigned not null auto_increment primary key,
@@ -43,6 +43,8 @@ create table food_order(
     foreign key (order_id) references orders(id),
     foreign key (food_id) references foods(id)
 );
+alter table food_order
+add column quantity int;
 ```
 ### Run app
 ```
@@ -59,4 +61,6 @@ and check API with POSTMAN.
 /api/login
 /api/register
 /api/order/update
+/api/{user}/food/list
+/api/{user}/food/create
 ```

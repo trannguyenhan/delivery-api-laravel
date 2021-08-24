@@ -13,6 +13,6 @@ class Order extends Model
     public $timestamps = false;
 
     public function foods(){
-        return $this->belongsToMany(\App\Models\Food::class);
+        return $this->belongsToMany(\App\Models\Food::class)->withPivot('quantity');
     }
 }
