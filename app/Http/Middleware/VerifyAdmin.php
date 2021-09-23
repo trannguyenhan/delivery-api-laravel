@@ -17,9 +17,7 @@ class VerifyAdmin
         $user_id = auth()->id();
 
         if($user_id == null){
-            return response()->json([
-                'code' => Code::ERROR,
-                'message' => 'you no login']);
+            return \App\Helper::errorResponse("You no login!");
         }
 
         $roles = User::find($user_id)->roles;
@@ -34,9 +32,7 @@ class VerifyAdmin
         if($cnt == 1){
             return $next($request);
         } else {
-            return response()->json([
-                'code' => Code::ERROR,
-                'message' => 'only admin access to resource']);
+            return \App\Helper::errorResponse("Only admin access to resource!");
         }
     }
 }

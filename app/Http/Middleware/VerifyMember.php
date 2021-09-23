@@ -19,9 +19,7 @@ class VerifyMember
         if($user == $user_id){
             return $next($request);
         } else {
-            return response()->json([
-                'code' => Code::ERROR,
-                'message' => 'you can not access to resource']);
+            return \App\Helper::errorResponse("You can not access to resource");
         }
 
     }
