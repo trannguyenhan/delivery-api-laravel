@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Constants\Code;
 use App\Models\Order;
-use Illuminate\Support\Facades\Validator;
 
 class OrderRepository extends BaseRepository
 {
