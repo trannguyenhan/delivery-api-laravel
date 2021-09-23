@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FoodCreateRequest;
+use App\Http\Requests\Food\FoodCreateRequest;
 use Illuminate\Http\Request;
-use App\Repositories\FoodEloquentRepository;
+use App\Repositories\FoodRepository;
 
 class FoodController extends Controller
 {
-    protected $foodRepository;
-
     public function __construct()
     {
-        $this->foodRepository = new FoodEloquentRepository();
+        $this->repository = new FoodRepository();
     }
 
-    public function show(Request $request){
-        return $this->foodRepository->show($request);
+    public function list(Request $request){
+        return $this->doList($request);
     }
 
     public function create(FoodCreateRequest $request){
-        return $this->foodRepository->create($request);
+        return $this->doCreate($request, \App\Models\Food::INSERT_FIELDS);
     }
 }

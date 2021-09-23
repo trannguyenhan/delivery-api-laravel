@@ -63,6 +63,7 @@ and check API with POSTMAN.
 /api/login
 /api/register
 /api/order/update
+/api/food/create
+/api/order/create
 /api/{user}/food/list
-/api/{user}/food/create
 ```

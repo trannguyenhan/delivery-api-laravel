@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\Code;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -13,26 +12,15 @@ class AuthController extends Controller
      * Login via email and password
      */
     public function login(LoginRequest $request){
-        // validate information login
-        $request->validated();
-
         // get information login
         $credentials = $request->only('email', 'password');
 
         if(! $token = auth()->attempt($credentials)){
-            return response()->json([
-                'message' => 'Login fail!',
-                'code' => Code::ERROR
-            ]);
+            return \App\Helper::errorResponse("Login fail! email or password incorrect");
         }
 
         // if success return information user and token
-        return response()->json([
-            'code' => Code::OK,
-            'message' => 'Login successfully!',
-            'access_token' => $token,
-            'user' => auth()->user()
-        ]);
+        return \App\Helper::successResponseWithToken($token);
     }
 
     /**
@@ -52,11 +40,7 @@ class AuthController extends Controller
             'password' => bcrypt($password)
         ]);
 
-        return response()->json([
-            'code' => Code::OK,
-            'message' => 'create account successfully',
-            'user' => $user
-        ]);
+        return \App\Helper::successResponse($user);
     }
 
     /**
@@ -64,17 +48,10 @@ class AuthController extends Controller
      */
     public function profile(){
         if(!auth()->check()){
-            return response()->json([
-                'code' => Code::ERROR,
-                'message' => 'error, you not login'
-            ]);
+            return \App\Helper::errorResponse("Fail! You need login!");
         }
 
-        return response()->json([
-            'code' => Code::OK,
-            'message' => 'get information successfully!',
-            'user' => auth()->user()
-        ]);
+        return \App\Helper::successResponse(auth()->user());
     }
 
     /**
@@ -82,10 +59,6 @@ class AuthController extends Controller
      */
     public function logout(){
         auth()->logout(); // delete token
-
-        return response()->json([
-            'code' => Code::OK,
-            'message' => 'logout successfully!',
-        ]);
+        return \App\Helper::successResponse();
     }
 }

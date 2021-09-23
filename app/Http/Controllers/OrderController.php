@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\Code;
-use App\Http\Requests\UpdateStatusFoodRequest;
-use App\Models\Order;
-use App\Repositories\OrderEloquentRepository;
+use App\Http\Requests\Order\OrderCreateRequest;
+use App\Http\Requests\Order\UpdateStatusOrderRequest;
+use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    protected $userRepository;
-
     public function __construct()
     {
-        $this->orderRepository = new OrderEloquentRepository();
+        $this->repository = new OrderRepository();
     }
 
-    public function show(Request $request){
-        return $this->orderRepository->show($request);
+    public function list(Request $request){
+        return $this->doList($request);
     }
 
-    public function update(UpdateStatusFoodRequest $request){
-        return $this->orderRepository->update($request);
+    public function create(OrderCreateRequest $request){
+        return $this->doCreate($request, \App\Models\Order::INSERT_FIELDS);
+    }
+
+    public function accept(UpdateStatusOrderRequest $request){
+        return $this->repository->accept($request);
     }
 
 

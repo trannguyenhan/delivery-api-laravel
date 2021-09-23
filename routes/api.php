@@ -26,14 +26,17 @@ Route::middleware('api')->get('/profile', [\App\Http\Controllers\AuthController:
 
 // only admin can see data of this API
 Route::middleware(['api', 'admin_verify'])->group(function(){
-    Route::get('/user/list', [\App\Http\Controllers\UserController::class, 'show']);
-    Route::get('/food/list', [\App\Http\Controllers\FoodController::class, 'show']);
-    Route::get('/order/list', [\App\Http\Controllers\OrderController::class, 'show']);
-    Route::post('/order/update', [\App\Http\Controllers\OrderController::class, 'update']);
+    Route::get('/user/list', [\App\Http\Controllers\UserController::class, 'list']);
+    Route::get('/food/list', [\App\Http\Controllers\FoodController::class, 'list']);
+    Route::get('/order/list', [\App\Http\Controllers\OrderController::class, 'list']);
+
+    Route::post('/order/accept', [\App\Http\Controllers\OrderController::class, 'accept']);
+
+    Route::post('/food/create', [\App\Http\Controllers\FoodController::class, 'create']);
 });
 
 // only member can see data of this API
-Route::middleware(['api', 'member_verify'])->group(function(){
+Route::middleware(['api', 'member_verify', 'admin_verify'])->group(function(){
     Route::get('/{user}/food/list', [\App\Http\Controllers\UserController::class, 'foods']);
-    Route::post('{user}/food/create', [\App\Http\Controllers\FoodController::class, 'create']);
+    Route::post('/order/create', [\App\Http\Controllers\OrderController::class, 'create']);
 });

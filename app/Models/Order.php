@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+    const SORT_FIELDS = ['name', 'created_at', 'updated_at'];
+    const INSERT_FIELDS = ['name', 'user_id', 'address', 'food_id', 'quantity'];
+    const UPDATE_FIELDS = ['id', 'status'];
+
     protected $fillable = ['id', 'user_id', 'address', 'time', 'status', 'name'];
     protected $table = 'orders';
     public $timestamps = false;

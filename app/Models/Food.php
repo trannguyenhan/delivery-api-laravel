@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Food extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'name', 'price', 'quantity'];
+
+    const SORT_FIELDS = ['name', 'created_at', 'updated_at'];
+    const INSERT_FIELDS = ['name', 'price'];
+
+    protected $fillable = ['id', 'name', 'price'];
     protected $table = 'foods';
     public $timestamps = false;
 }

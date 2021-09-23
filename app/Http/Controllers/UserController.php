@@ -3,20 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\UserEloquentRepository;
+use App\Repositories\UserRepository;
 use App\Models\User;
 
 class UserController extends Controller
 {
-    protected $userRepository;
-
     public function __construct()
     {
-        $this->userRepository = new UserEloquentRepository();
+        $this->repository = new UserRepository();
     }
 
-    public function show(Request $request){
-        return $this->userRepository->show($request);
+    public function list(Request $request){
+        return $this->doList($request);
     }
 
     public function foods($user){

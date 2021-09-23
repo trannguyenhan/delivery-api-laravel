@@ -13,6 +13,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const SORT_FIELDS = ['name', 'email', 'created_at', 'updated_at'];
+
     /**
      * The attributes that are mass assignable.
      *

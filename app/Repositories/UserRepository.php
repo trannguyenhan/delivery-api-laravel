@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-class UserEloquentRepository extends EloquentRepository
+class UserRepository extends BaseRepository
 {
     protected $_relationships = ['roles', 'orders'];
 

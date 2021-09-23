@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
-class RegisterRequest extends InputRequest
+use App\Http\Requests\BaseRequest;
+
+class RegisterRequest extends BaseRequest
 {
     protected $regex = [
         'name' => 'required|string',

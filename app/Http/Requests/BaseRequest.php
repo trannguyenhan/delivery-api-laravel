@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 
-class InputRequest extends FormRequest
+class BaseRequest extends FormRequest
 {
     protected $regex = [
         'email' => 'required|email|string',
