@@ -1,4 +1,4 @@
-API for Delivery App 
+API for Delivery App, this is mini project to learn laravel framework.
 
 ### Create users table default of Laravel
 ```
